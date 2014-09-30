@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/Three.js"></script>
+        <script>
+            function onLoad() {
+                
+                //Grab our container div
+                var container = document.getElementById("container");
+                
+                //Create the Three.js renderer and append it to our div
+                var renderer = new THREE.WebGLRenderer();
+                renderer.setSize(container.offsetWidth, container.offsetHeight);
+                container.appendChild(renderer.domElement);
+
+                //Create the new Three.js scene
+                var scene = new THREE.Scene();
+
+                //Create Three.js camera and add it to the scene
+                var camera = new THREE.PerspectiveCamera( 45, container.offsetWidth / container.offsetHeight, 1, 4000);
+                camera.position.set(0, 0, 3.3333);
+                scene.add(camera);
+
+                //Create rectangle and add it to the scene
+                var geometry = new THREE.PlaneGeometry(1, 1);
+                var mesh = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( ) );
+                scene.add(mesh);
+
+                //Render it
+                renderer.render( scene, camera );
+
+            }
+        </script>
+    </head>
+    <body onload="onLoad();">
+        <div id="container" style="width: 500px; height: 500px; background-color: #000000;"></div>
+    </body>
+</html>
