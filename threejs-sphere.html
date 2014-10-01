@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>AEL 3D</title>
+        <title>Sphere</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="js/Three.js"></script>
@@ -32,7 +32,6 @@ and open the template in the editor.
 
                 //Put in a camera
                 camera = new THREE.PerspectiveCamera( 45, container.offsetWidth / container.offsetHeight, 1, 4000);
-//                camera.position.set(0,0, 3);
                 camera.position.z = 1000;
                 
                 // add subtle ambient lighting
@@ -46,39 +45,19 @@ and open the template in the editor.
                 
                 // Create a shaded, texture-mapped cube and add it to the scene
                 // First, create the texture map
-                var mapUrl = "images/ael-logo.jpg";
-//                var map = THREE.ImageUtils.loadTexture(mapUrl);
-//                map.repeat.set( 4, 4 );
-//                map.wrapS = map.wrapT = THREE.RepeatWrapping;
-//                map.anisotropy = 16;
-//                
-//                // Now, create a Phong material to show shading; pass in the map
-//                var material = new THREE.MeshPhongMaterial({ 
-//                    map: map
-//                });
+                var mapUrl = "images/football.jpg";
                 
                 var texture = THREE.ImageUtils.loadTexture(mapUrl);
-                texture.repeat.set(2,2);
-                texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 
-                var material = new THREE.MeshPhongMaterial( { map: texture } );
-                var cube = new THREE.Mesh( new THREE.CubeGeometry( 200, 200, 200 ), material );
+                var material = new THREE.MeshLambertMaterial( {
+                    map: texture
+                });
+                var sphere = new THREE.Mesh( new THREE.SphereGeometry( 200, 100, 100 ), material );
 
-//                console.log(material);
-//                // Create the cube geometry
-//                var geometry = new THREE.BoxGeometry(200, 200, 200);
-//                
-//                // And put the geometry and material together into a mesh
-//                cube = new THREE.Mesh(geometry, material);
-                
-                // Turn it toward the scene, or we won't see the cube shape!
-//                cube.rotation.x = Math.PI / 5;
-//                cube.rotation.y = Math.PI / 5;
-//                cube.overdraw = true;
-                cube.rotation.x = Math.PI * 0.1;
+                sphere.rotation.x = Math.PI * 0.1;
                 
                 // Add the cube to our scene
-                scene.add( cube );
+                scene.add( sphere );
                 
                 // Add a mouse up handler to toggle the animation
                 addMouseHandler();
@@ -87,13 +66,13 @@ and open the template in the editor.
                 run();
                 
                 function run() {
-                
+
                     // Render the scene
                     renderer.render( scene, camera );
 
                     // Spin the cube for next frame
                     if (animating) {
-                        cube.rotation.y -= 0.01;
+                        sphere.rotation.y -= 0.01;
                     }
                     // Ask for another frame
                     requestAnimationFrame(run);
