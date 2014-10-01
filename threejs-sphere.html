@@ -48,16 +48,26 @@ and open the template in the editor.
                 var mapUrl = "images/football.jpg";
                 
                 var texture = THREE.ImageUtils.loadTexture(mapUrl);
-
-                var material = new THREE.MeshLambertMaterial( {
+                var material = new THREE.MeshLambertMaterial({
                     map: texture
                 });
-                var sphere = new THREE.Mesh( new THREE.SphereGeometry( 200, 100, 100 ), material );
-
-                sphere.rotation.x = Math.PI * 0.1;
+                var sphere = new THREE.Mesh( new THREE.SphereGeometry( 100, 100, 100 ), material );
+                sphere.position.set(-200, 0 , 1)
+//                sphere.rotation.x = Math.PI * 0.1;
+                
+                var moonMap = "images/moon.jpg";
+                
+                var texture1 = THREE.ImageUtils.loadTexture(moonMap);
+                var material1 = new THREE.MeshLambertMaterial({
+                    map: texture1
+                });
+                var sphere1 = new THREE.Mesh( new THREE.SphereGeometry( 200, 100, 100 ), material1 );
+                sphere1.position.set(200, 0, 1);
                 
                 // Add the cube to our scene
                 scene.add( sphere );
+                scene.add( sphere1 );
+                
                 
                 // Add a mouse up handler to toggle the animation
                 addMouseHandler();
@@ -72,7 +82,7 @@ and open the template in the editor.
 
                     // Spin the cube for next frame
                     if (animating) {
-                        sphere.rotation.y -= 0.01;
+                        sphere1.rotation.y -= 0.01;
                     }
                     // Ask for another frame
                     requestAnimationFrame(run);

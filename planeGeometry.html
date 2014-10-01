@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Plane Geometry</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/Three.js"></script>
+        <script src="js/requestAnimationFrame.js"></script>
+        <script>
+            var render = null,
+                scene  = null,    
+                camera = null,
+                cube = null,
+                animating = false;
+        
+            function onLoad() {
+                //Grab our container div
+                var container = document.getElementById('container');
+
+                //Create the Three.js renderer add it to our div
+                renderer = new THREE.WebGLRenderer ({antialias: true});
+                renderer.setSize(container.offsetWidth, container.offsetHeight);
+                container.appendChild(renderer.domElement);
+
+                //Create Three.js scene
+                scene = new THREE.Scene();
+
+                //Put in a camera
+                camera = new THREE.PerspectiveCamera( 45, container.offsetWidth / container.offsetHeight, 1, 1000);
+                camera.position.z = 30;
+                
+                //Triangle with Geometry
+                var triangleGeometry = new THREE.Geometry();
+                triangleGeometry.vertices.push(new THREE.Vector3( 0.0,  1.0, 0.0));
+                triangleGeometry.vertices.push(new THREE.Vector3(-1.0, -1.0, 0.0));
+                triangleGeometry.vertices.push(new THREE.Vector3( 1.0, -1.0, 0.0));
+                
+                triangleGeometry.faces.push(new THREE.Face3(0, 1, 2));
+                triangleGeometry.computeFaceNormals();
+                var triangleMaterial = new THREE.MeshBasicMaterial({
+                    color:0xFF0000
+                });
+                var triangleMesh = new THREE.Mesh(triangleGeometry, triangleMaterial);
+                triangleMesh.position.set(-1.5, 0.0, 4.0);
+                //scene.add(triangleMesh);
+                
+//               var geometry = new THREE.PlaneGeometry( 1, 2, 3, 3 );
+//                var material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
+//                var plane = new THREE.Mesh( geometry, material );
+//                scene.add( plane );
+                
+                var jsonLoader = new THREE.JSONLoader();
+                jsonLoader.load( "js/android.js", addModelToScene );
+                
+                var ambientLight = new THREE.AmbientLight(0x111111);
+                scene.add(ambientLight);
+                function addModelToScene( geometry, materials ) {
+                        var material = new THREE.MeshFaceMaterial( materials );
+                        android = new THREE.Mesh( geometry, material );
+                        android.scale.set(10,10,10);
+                        scene.add( android );
+                }
+                
+               renderer.render(scene, camera);
+            }
+        </script>
+    </head>
+    <body onLoad="onLoad();" style="">
+        <center><h1>Welcome to WebGL!</h1></center>
+        <div id="container" style="width:95%; height:80%; position:absolute;">
+        </div>
+        <div id="prompt" style="width:95%; height:6%; bottom:0; position:absolute;">
+            Click to animate the cube
+        </div>
+    </body>
+</html>
